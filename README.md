@@ -28,12 +28,13 @@ DB1:各患者データのDB
 | ------------------ | ------------------ | ------------ | -------- | -------------- | 
 | ID                 | id                 | int          | NO       | primary key    | 
 | 名前               | name               | varchar(255) | NO       |                | 
-| 生年月日           | birthdate          | date         | NO       | YYYY-MM-DD形式 | 
+| 生年月日           | birthdate          | date         | NO       |                 | 
 
 DB2：各患者の処方データ
 | カラム名（論理名） | カラム名（物理名） | 型・桁       | Nullable | その他コメント                           | 
 | ------------------ | ------------------ | ------------ | -------- | ---------------------------------------- | 
 | ID                 | id                 | int          | NO       | primary key                              | 
-| 訪問日             | visitDate          | datetime         | NO       | YYYY-MM-DD HH:MM:SS | 
+| ユーザーID          | userId             | int          | NO       |                                           | 
+| 訪問日             | visitDate          | datetime     | NO       | YYYY-MM-DD HH:MM:SS(登録時間) | 
 | 薬局名             | pharmacy           | varchar(255) | NO       | 外部APIから取ってこれないかな？          | 
 | 処方薬             | medicine           | varchar(255) | NO       | 外部APIから取ってこれないかな？          | 
