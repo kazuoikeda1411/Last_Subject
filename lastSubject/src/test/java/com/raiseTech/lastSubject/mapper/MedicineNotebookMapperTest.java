@@ -14,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,6 +27,8 @@ class MedicineNotebookMapperTest {
 	@Autowired
 	MedicineNotebookMapper medicineNotebookMapper;
 	List patientList = List.of(new PatientInformation(1, "Sato", Date.valueOf("2000-01-01")), new PatientInformation(2, "tanaka", Date.valueOf("1999-04-01")), new PatientInformation(3, "nakamura", Date.valueOf("1998-08-01")));
+	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+	List medicineList = List.of(new MedicineInformation(1, 1, timestamp, "raiseTech_phamacy", "ibuprofen"));
 
 	@Test
 	@DataSet(value="datasets/patient_informations.yml")
@@ -41,6 +45,7 @@ class MedicineNotebookMapperTest {
 	void 指定した情報を元に正確なお薬情報を取得できること() {
 		List<MedicineInformation> actual = medicineNotebookMapper.findByPatient("Sato", 20000101);
 		assertThat(actual.size()).isEqualTo(1);
+		assertThat(actual).isEqualTo(medicineList);
 	}
 
 	@Test
@@ -50,9 +55,11 @@ class MedicineNotebookMapperTest {
 		PatientRequest patientRequest = new PatientRequest();
 		patientRequest.setName("Sato");
 		patientRequest.setBirthdate(20000101);
-		int actual = medicineNotebookMapper.postPatient(patientRequest);
+		medicineNotebookMapper.postPatient(patientRequest);
+		int actual = patientRequest.getId();
 		assertThat(actual).isEqualTo(1);
 	}
+
 	@Test
 	@DataSet(value="datasets/patient_informations.yml,datasets/patient_medicine_informations.yml")
 	@Transactional
@@ -62,40 +69,26 @@ class MedicineNotebookMapperTest {
 		medicineRequest.setBirthdate(20000101);
 		medicineRequest.setPharmacy("raiseTech_phamacy");
 		medicineRequest.setMedicine("ibuprofen");
-		int actual = medicineNotebookMapper.postMedicine(medicineRequest);
+		medicineNotebookMapper.postMedicine(medicineRequest);
+		int actual = medicineRequest.getId();
 		assertThat(actual).isEqualTo(1);
 	}
+
 	@Test
 	@ExpectedDataSet(value="datasets/patient_informations.yml", ignoreCols="id")
 	public void 適切に患者情報が登録されていること() {
-		PatientRequest patientRequest1 = new PatientRequest();
-		patientRequest1.setName("Sato");
-		patientRequest1.setBirthdate(20000101);
-		PatientRequest patientRequest2 = new PatientRequest();
-		patientRequest2.setName("tanaka");
-		patientRequest2.setBirthdate(19990401);
-		PatientRequest patientRequest3 = new PatientRequest();
-		patientRequest3.setName("nakamura");
-		patientRequest3.setBirthdate(19980801);
-		medicineNotebookMapper.postPatient(patientRequest1);
-		medicineNotebookMapper.postPatient(patientRequest2);
-		medicineNotebookMapper.postPatient(patientRequest3);
+		List<PatientRequest> patientRequests = Arrays.asList(new PatientRequest("Sato", 20000101), new PatientRequest("tanaka", 19990401), new PatientRequest("nakamura", 19980801));
+		medicineNotebookMapper.postPatient(patientRequests.get(0));
+		medicineNotebookMapper.postPatient(patientRequests.get(1));
+		medicineNotebookMapper.postPatient(patientRequests.get(2));
 	}
+
 	@Test
 	@DataSet(value="datasets/patient_informations.yml")
 	@ExpectedDataSet(value="patient_medicine_informations.yml", ignoreCols="id")
 	public void 適切にお薬情報が登録されていること() {
-		MedicineRequest medicineRequest1 = new MedicineRequest();
-		medicineRequest1.setName("Sato");
-		medicineRequest1.setBirthdate(20000101);
-		medicineRequest1.setPharmacy("raiseTech_phamacy");
-		medicineRequest1.setMedicine("ibuprofen");
-		MedicineRequest medicineRequest2 = new MedicineRequest();
-		medicineRequest2.setName("tanaka");
-		medicineRequest2.setBirthdate(19990401);
-		medicineRequest2.setPharmacy("raiseTech_phamacy");
-		medicineRequest2.setMedicine("PL顆粒");
-		medicineNotebookMapper.postMedicine(medicineRequest1);
-		medicineNotebookMapper.postMedicine(medicineRequest2);
+		List<MedicineRequest> medicineRequests = Arrays.asList(new MedicineRequest("Sato", 20000101, "raiseTech_pharmacy", "ibuprofen"), new MedicineRequest("tanaka", 19990401, "raiseTech_pharmacy", "PL顆粒"));
+		medicineNotebookMapper.postMedicine(medicineRequests.get(0));
+		medicineNotebookMapper.postMedicine(medicineRequests.get(1));
 	}
 }

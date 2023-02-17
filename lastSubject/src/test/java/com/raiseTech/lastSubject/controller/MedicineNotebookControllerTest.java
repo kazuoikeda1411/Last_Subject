@@ -32,17 +32,21 @@ class MedicineNotebookControllerTest {
 	MedicineNotebookService medicineNotebookService;
 
 	List<PatientInformation> patientList = List.of(new PatientInformation(1, "Sato", Date.valueOf("2000-01-01")));
+	List<PatientsResponse> expected = List.of(new PatientsResponse(1, "Sato", Date.valueOf("2000-01-01")));
 	List medicineList = List.of(new MedicineInformation(1, 1, Timestamp.valueOf("2023-01-03 00:00:00"), "raiseTech_phamacy", "ibuprofen"));
 
 	@Test
 	public void 患者情報を全件取得できること() {
 		doReturn(patientList).when(medicineNotebookService).findAll();
 		List<PatientsResponse> actual = medicineNotebookController.getPatients();
-		assertThat(actual.get(0).getId()).isEqualTo(1);
-		assertThat(actual.get(0).getName()).isEqualTo("Sato");
-		assertThat(actual.get(0).getBirthdate()).isEqualTo(Date.valueOf("2000-01-01"));
+//		assertThat(actual.get(0).getId()).isEqualTo(1);
+//		assertThat(actual.get(0).getName()).isEqualTo("Sato");
+//		assertThat(actual.get(0).getBirthdate()).isEqualTo(Date.valueOf("2000-01-01"));
+//		assertThat(actual).isEqualTo(expected);
+		assertThat(actual).isEqualTo(expected);
 		verify(medicineNotebookService).findAll();
 	}
+
 	@Test
 	public void 存在するユーザーの情報を指定したときに正常にユーザーデータが返されること() {
 		PatientRequest patientRequest = new PatientRequest();
@@ -55,6 +59,7 @@ class MedicineNotebookControllerTest {
 		assertThat(actual.get(0).getMedicine()).isEqualTo("ibuprofen");
 		verify(medicineNotebookService).findByPatient(patientRequest);
 	}
+
 	@Test
 	public void 患者情報を指定したときに適切なIDとBODYが返されること() {
 		PatientRequest patientRequest = new PatientRequest();
@@ -68,6 +73,7 @@ class MedicineNotebookControllerTest {
 		verify(medicineNotebookService).postPatient(patientRequest);
 		assertThat(actual.getBody().toString()).isEqualTo("{id=1, message=patient successfully created}");
 	}
+
 	@Test
 	public void お薬情報を指定したとき適切なIDとBODYが返されること() {
 		MedicineRequest medicineRequest = new MedicineRequest();

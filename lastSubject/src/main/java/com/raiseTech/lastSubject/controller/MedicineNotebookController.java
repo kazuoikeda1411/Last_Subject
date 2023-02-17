@@ -21,24 +21,28 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MedicineNotebookController {
 	private final MedicineNotebookService medicineNotebookService;
+
 	@GetMapping("/patients")
 	public List<PatientsResponse> getPatients() {
 		return medicineNotebookService.findAll().stream().map(PatientsResponse::new).toList();
 	}
+
 	@GetMapping("/medicines")
 	public List<MedicineResponse> getMedicine(@RequestBody PatientRequest patientRequest) {
 		return medicineNotebookService.findByPatient(patientRequest).stream().map(MedicineResponse::new).toList();
 	}
+
 	@PostMapping("/patients")
 	public ResponseEntity postPatient(@RequestBody PatientRequest patientRequest, UriComponentsBuilder uriBuilder) {
-		medicineNotebookService.postPatient(patientRequest);
-		URI url = uriBuilder.path("/patients/" + patientRequest.getId()).build().toUri();
-		return ResponseEntity.created(url).body(Map.of("id", patientRequest.getId(), "message", "patient successfully created"));
+		int id = medicineNotebookService.postPatient(patientRequest);
+		URI url = uriBuilder.path("/patients/" + id).build().toUri();
+		return ResponseEntity.created(url).body(Map.of("id", id, "message", "patient successfully created"));
 	}
+
 	@PostMapping("/medicines")
 	public ResponseEntity postMedicine(@RequestBody MedicineRequest medicineRequest, UriComponentsBuilder uriComponentsBuilder) {
-		medicineNotebookService.postMedicine(medicineRequest);
-		URI url = uriComponentsBuilder.path("/medicine/" + medicineRequest.getId()).build().toUri();
-		return ResponseEntity.created(url).body(Map.of("id", medicineRequest.getId(), "message", "medicine successfully created"));
+		int id = medicineNotebookService.postMedicine(medicineRequest);
+		URI url = uriComponentsBuilder.path("/medicine/" + id).build().toUri();
+		return ResponseEntity.created(url).body(Map.of("id", id, "message", "medicine successfully created"));
 	}
 }

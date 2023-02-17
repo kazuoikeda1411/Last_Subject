@@ -17,6 +17,9 @@
 
     <insert id="postPatient" useGeneratedKeys="true" keyProperty="id">
         insert into patient_informations (name,birthdate) values (#{name},#{birthdate})
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select @@IDENTITY
+        </selectKey>
     </insert>
 
     <insert id="postMedicine" useGeneratedKeys="true" keyProperty="id">
@@ -24,5 +27,8 @@
         ((select id from patient_informations where name=#{name}
         and
         birthdate=#{birthdate}),now(),#{pharmacy},#{medicine})
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select @@IDENTITY
+        </selectKey>
     </insert>
 </mapper>

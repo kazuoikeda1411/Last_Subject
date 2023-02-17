@@ -13,6 +13,6 @@ import java.util.List;
 public interface MedicineNotebookMapper {
 	List<PatientInformation> findAll();
 	List<MedicineInformation> findByPatient(@Param("name") String name, @Param("birthdate") int birthdate);
-	int postPatient(PatientRequest patientRequest);
-	int postMedicine(MedicineRequest medicineRequest);
+	void postPatient(PatientRequest patientRequest);
+	void postMedicine(MedicineRequest medicineRequest);
 }

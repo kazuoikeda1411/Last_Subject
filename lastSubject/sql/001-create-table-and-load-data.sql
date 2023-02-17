@@ -18,6 +18,6 @@ CREATE TABLE patient_medicine_informations(
   PRIMARY KEY(id)
 );
 
-INSERT INTO patient_informations (name,birthdate) VALUES ("Sato",20000101);
-INSERT INTO patient_medicine_informations (userId,visitDate,pharmacy,medicine) VALUES (1,now(),"raiseTech_phamacy",
-"ibuprofen");
+--INSERT INTO patient_informations (name,birthdate) VALUES ("Sato",20000101);
+--INSERT INTO patient_medicine_informations (userId,visitDate,pharmacy,medicine) VALUES (1,now(),"raiseTech_phamacy",
+--"ibuprofen");
