@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS patient_informations;
 
 CREATE TABLE patient_informations(
   id int unsigned AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  birthdate date NOT NULL,
+  userName VARCHAR(255) NOT NULL,
+  userBirthdate DATE NOT NULL,
   PRIMARY KEY(id)
 );
 
@@ -18,6 +18,6 @@ CREATE TABLE patient_medicine_informations(
   PRIMARY KEY(id)
 );
 
-INSERT INTO patient_informations (name,birthdate) VALUES ("Sato",20000101);
-INSERT INTO patient_medicine_informations (userId,visitDate,pharmacy,medicine) VALUES (1,now(),"raiseTech_phamacy",
-"ibuprofen");
+--INSERT INTO patient_informations (name,birthdate) VALUES ("Sato",20000101);
+--INSERT INTO patient_medicine_informations (userId,visitDate,pharmacy,medicine) VALUES (1,now(),"raiseTech_phamacy",
+--"ibuprofen");

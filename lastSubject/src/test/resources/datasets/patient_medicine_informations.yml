@@ -1,0 +1,11 @@
+patient_medicine_informations:
+  - id: 1
+    userId: 1
+    visitDate: "[DAY,NOW]"
+    pharmacy: "raiseTech_pharmacy"
+    medicine: "ibuprofen"
+  - id: 2
+    userId: 2
+    visitDate: "[DAY,NOW]"
+    pharmacy: "raiseTech_pharmacy"
+    medicine: "PL顆粒"

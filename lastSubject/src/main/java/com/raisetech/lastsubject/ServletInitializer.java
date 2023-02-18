@@ -1,4 +1,4 @@
-package com.raiseTech.lastSubject;
+package com.raisetech.lastsubject;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
