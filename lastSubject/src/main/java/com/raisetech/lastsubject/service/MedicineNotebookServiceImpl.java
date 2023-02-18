@@ -23,16 +23,16 @@ public class MedicineNotebookServiceImpl implements MedicineNotebookService {
 
 	@Override
 	public List<MedicineInformation> findByPatient(PatientRequest patientRequest) {
-		if (patientRequest.getName().isEmpty() || String.valueOf(patientRequest.getBirthdate()).isEmpty()) {
+		if (patientRequest.getUserName().isEmpty() || String.valueOf(patientRequest.getUserBirthdate()).isEmpty()) {
 			throw new ResourceNotFoundException("resource not found");
 		}
-		return this.medicineNotebookMapper.findByPatient(patientRequest.getName(), patientRequest.getBirthdate());
+		return this.medicineNotebookMapper.findByPatient(patientRequest.getUserName(), patientRequest.getUserBirthdate());
 	}
 
 	@Override
 	public int postPatient(PatientRequest patientRequest) {
-		if (String.valueOf(patientRequest.getBirthdate()).length() != 8) {
-			throw new IllegalArgumentException("birthdate is invalid value");
+		if (String.valueOf(patientRequest.getUserBirthdate()).length() != 8) {
+			throw new IllegalArgumentException("userBirthdate is invalid value");
 		} else {
 			this.medicineNotebookMapper.postPatient(patientRequest);
 			return patientRequest.getId();
@@ -40,8 +40,8 @@ public class MedicineNotebookServiceImpl implements MedicineNotebookService {
 	}
 	@Override
 	public int postMedicine(MedicineRequest medicineRequest) {
-		if (String.valueOf(medicineRequest.getBirthdate()).length() != 8) {
-			throw new IllegalArgumentException("birthdate is invalid value");
+		if (String.valueOf(medicineRequest.getUserBirthdate()).length() != 8) {
+			throw new IllegalArgumentException("userBirthdate is invalid value");
 		} else {
 			this.medicineNotebookMapper.postMedicine(medicineRequest);
 			return medicineRequest.getId();

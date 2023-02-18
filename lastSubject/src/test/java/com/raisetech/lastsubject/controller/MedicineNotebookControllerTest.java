@@ -50,8 +50,8 @@ class MedicineNotebookControllerTest {
 	@Test
 	public void 存在するユーザーの情報を指定したときに正常にユーザーデータが返されること() {
 		PatientRequest patientRequest = new PatientRequest();
-		patientRequest.setName("Sato");
-		patientRequest.setBirthdate(20000101);
+		patientRequest.setUserName("Sato");
+		patientRequest.setUserBirthdate(20000101);
 		doReturn(medicineList).when(medicineNotebookService).findByPatient(patientRequest);
 		List<MedicineResponse> actual = medicineNotebookController.getMedicine(patientRequest);
 		assertThat(actual.get(0).getVisitDate()).isEqualTo(Timestamp.valueOf("2023-01-03 00:00:00"));
@@ -64,8 +64,8 @@ class MedicineNotebookControllerTest {
 	public void 患者情報を指定したときに適切なIDとBODYが返されること() {
 		PatientRequest patientRequest = new PatientRequest();
 		patientRequest.setId(1);
-		patientRequest.setName("Sato");
-		patientRequest.setBirthdate(20000101);
+		patientRequest.setUserName("Sato");
+		patientRequest.setUserBirthdate(20000101);
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance();
 		doReturn(1).when(medicineNotebookService).postPatient(patientRequest);
 		ResponseEntity actual = medicineNotebookController.postPatient(patientRequest, uriBuilder);
@@ -78,8 +78,8 @@ class MedicineNotebookControllerTest {
 	public void お薬情報を指定したとき適切なIDとBODYが返されること() {
 		MedicineRequest medicineRequest = new MedicineRequest();
 		medicineRequest.setId(1);
-		medicineRequest.setName("Sato");
-		medicineRequest.setBirthdate(20000101);
+		medicineRequest.setUserName("Sato");
+		medicineRequest.setUserBirthdate(20000101);
 		medicineRequest.setPharmacy("raiseTech_phamacy");
 		medicineRequest.setMedicine("ibuprofen");
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance();

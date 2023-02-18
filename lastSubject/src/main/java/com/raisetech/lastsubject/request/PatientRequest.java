@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class PatientRequest {
 	private int id;
-	private String name;
-	private int birthdate;
-	public PatientRequest(String name, int birthdate) {
-		this.name = name;
-		this.birthdate = birthdate;
+	private String userName;
+	private int userBirthdate;
+	public PatientRequest(String userName, int userBirthdate) {
+		this.userName = userName;
+		this.userBirthdate = userBirthdate;
 	}
 	public PatientRequest() {
 	}

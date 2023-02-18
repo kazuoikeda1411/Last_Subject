@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS patient_informations;
 
 CREATE TABLE patient_informations(
   id int unsigned AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  birthdate DATE NOT NULL,
+  userName VARCHAR(255) NOT NULL,
+  userBirthdate DATE NOT NULL,
   PRIMARY KEY(id)
 );
 

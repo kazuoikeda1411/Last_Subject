@@ -8,16 +8,16 @@ import java.sql.Date;
 @Getter
 public class PatientsResponse {
 	private final int id;
-	private final String name;
-	private final Date birthdate;
+	private final String userName;
+	private final Date userBirthdate;
 	public PatientsResponse(PatientInformation patientInformation) {
 		this.id = patientInformation.id();
-		this.name = patientInformation.name();
-		this.birthdate = patientInformation.birthdate();
+		this.userName = patientInformation.userName();
+		this.userBirthdate = patientInformation.userBirthdate();
 	}
-	public PatientsResponse(int id, String name, Date birthdate) {
+	public PatientsResponse(int id, String userName, Date userBirthdate) {
 		this.id = id;
-		this.name = name;
-		this.birthdate = birthdate;
+		this.userName = userName;
+		this.userBirthdate = userBirthdate;
 	}
 }

@@ -28,7 +28,7 @@ class MedicineNotebookMapperTest {
 	MedicineNotebookMapper medicineNotebookMapper;
 	List patientList = List.of(new PatientInformation(1, "Sato", Date.valueOf("2000-01-01")), new PatientInformation(2, "tanaka", Date.valueOf("1999-04-01")), new PatientInformation(3, "nakamura", Date.valueOf("1998-08-01")));
 	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-	List medicineList = List.of(new MedicineInformation(1, 1, timestamp, "raiseTech_phamacy", "ibuprofen"));
+	List<MedicineInformation> medicineList = List.of(new MedicineInformation(1, 1, timestamp, "raiseTech_pharmacy", "ibuprofen"));
 
 	@Test
 	@DataSet(value="datasets/patient_informations.yml")
@@ -45,7 +45,10 @@ class MedicineNotebookMapperTest {
 	void 指定した情報を元に正確なお薬情報を取得できること() {
 		List<MedicineInformation> actual = medicineNotebookMapper.findByPatient("Sato", 20000101);
 		assertThat(actual.size()).isEqualTo(1);
-		assertThat(actual).isEqualTo(medicineList);
+		assertThat(actual.get(0).id()).isEqualTo(medicineList.get(0).id());
+		assertThat(actual.get(0).userId()).isEqualTo(medicineList.get(0).userId());
+		assertThat(actual.get(0).pharmacy()).isEqualTo(medicineList.get(0).pharmacy());
+		assertThat(actual.get(0).medicine()).isEqualTo(medicineList.get(0).medicine());
 	}
 
 	@Test
@@ -53,8 +56,8 @@ class MedicineNotebookMapperTest {
 	@Transactional
 	void 指定した患者情報の登録時に生成されたIdが返されていること() {
 		PatientRequest patientRequest = new PatientRequest();
-		patientRequest.setName("Sato");
-		patientRequest.setBirthdate(20000101);
+		patientRequest.setUserName("Sato");
+		patientRequest.setUserBirthdate(20000101);
 		medicineNotebookMapper.postPatient(patientRequest);
 		int actual = patientRequest.getId();
 		assertThat(actual).isEqualTo(1);
@@ -65,8 +68,8 @@ class MedicineNotebookMapperTest {
 	@Transactional
 	void 指定した患者情報とお薬情報を元に情報を登録して生成されたIdが返されること() {
 		MedicineRequest medicineRequest = new MedicineRequest();
-		medicineRequest.setName("Sato");
-		medicineRequest.setBirthdate(20000101);
+		medicineRequest.setUserName("Sato");
+		medicineRequest.setUserBirthdate(20000101);
 		medicineRequest.setPharmacy("raiseTech_phamacy");
 		medicineRequest.setMedicine("ibuprofen");
 		medicineNotebookMapper.postMedicine(medicineRequest);

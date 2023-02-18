@@ -10,13 +10,14 @@
 
     <select id="findByPatient" parameterType="java.util.List"
             resultType="com.raisetech.lastsubject.entity.MedicineInformation">
-        select * from patient_medicine_informations where userId=(select id from patient_informations where name=#{name}
+        select * from patient_medicine_informations where userId=(select id from patient_informations where
+        userName=#{userName}
         and
-        birthdate=#{birthdate})
+        userBirthdate=#{userBirthdate})
     </select>
 
     <insert id="postPatient" useGeneratedKeys="true" keyProperty="id">
-        insert into patient_informations (name,birthdate) values (#{name},#{birthdate})
+        insert into patient_informations (userName,userBirthdate) values (#{userName},#{userBirthdate})
         <selectKey resultType="int" keyProperty="id" order="AFTER">
             select @@IDENTITY
         </selectKey>
@@ -24,9 +25,9 @@
 
     <insert id="postMedicine" useGeneratedKeys="true" keyProperty="id">
         insert into patient_medicine_informations(userId,visitDate,pharmacy,medicine) values
-        ((select id from patient_informations where name=#{name}
+        ((select id from patient_informations where userName=#{userName}
         and
-        birthdate=#{birthdate}),now(),#{pharmacy},#{medicine})
+        userBirthdate=#{userBirthdate}),now(),#{pharmacy},#{medicine})
         <selectKey resultType="int" keyProperty="id" order="AFTER">
             select @@IDENTITY
         </selectKey>

@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface MedicineNotebookMapper {
 	List<PatientInformation> findAll();
-	List<MedicineInformation> findByPatient(@Param("name") String name, @Param("birthdate") int birthdate);
+	List<MedicineInformation> findByPatient(@Param("userName") String userName, @Param("userBirthdate") int userBirthdate);
 	void postPatient(PatientRequest patientRequest);
 	void postMedicine(MedicineRequest medicineRequest);
 }

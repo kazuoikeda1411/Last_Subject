@@ -7,24 +7,24 @@ import lombok.Getter;
 public class MedicineRequest {
 	private int id;
 	private int userId;
-	private String name;
-	private int birthdate;
+	private String userName;
+	private int userBirthdate;
 	private String pharmacy;
 	private String medicine;
-	public MedicineRequest(String name, int birthdate, String pharmacy, String medicine) {
-		this.birthdate = birthdate;
-		this.name = name;
+	public MedicineRequest(String userName, int userBirthdate, String pharmacy, String medicine) {
+		this.userBirthdate = userBirthdate;
+		this.userName = userName;
 		this.pharmacy = pharmacy;
 		this.medicine = medicine;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public void setBirthdate(int birthdate) {
-		this.birthdate = birthdate;
+	public void setUserBirthdate(int userBirthdate) {
+		this.userBirthdate = userBirthdate;
 	}
 	public void setPharmacy(String pharmacy) {
 		this.pharmacy = pharmacy;
@@ -34,5 +34,4 @@ public class MedicineRequest {
 	}
 	public MedicineRequest() {
 	}
-	;
 }

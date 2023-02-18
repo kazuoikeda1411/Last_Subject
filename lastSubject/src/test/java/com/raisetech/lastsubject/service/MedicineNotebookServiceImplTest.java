@@ -40,8 +40,8 @@ class MedicineNotebookServiceImplTest {
 	@Test
 	public void 存在するユーザーの情報を指定したときに正常にユーザーデータが返されること() {
 		PatientRequest patientRequest = new PatientRequest();
-		patientRequest.setName("Sato");
-		patientRequest.setBirthdate(20000101);
+		patientRequest.setUserName("Sato");
+		patientRequest.setUserBirthdate(20000101);
 		doReturn(medicineList).when(medicineNotebookMapper).findByPatient("Sato", 20000101);
 		List<MedicineInformation> actual = medicineNotebookServiceImpl.findByPatient(patientRequest);
 		assertThat(actual).isEqualTo(medicineList);
@@ -51,16 +51,16 @@ class MedicineNotebookServiceImplTest {
 	@Test
 	public void 指定したユーザー情報に当てはまるmedicineの情報がない時ResourceNotFoundExceptionが返されること() {
 		PatientRequest patientRequest = new PatientRequest();
-		patientRequest.setName("");
-		patientRequest.setBirthdate(20000101);
+		patientRequest.setUserName("");
+		patientRequest.setUserBirthdate(20000101);
 		assertThatThrownBy(() -> medicineNotebookServiceImpl.findByPatient(patientRequest)).isInstanceOf(ResourceNotFoundException.class);
 	}
 
 	@Test
 	public void 患者情報を指定したときに正常にユーザーデータが登録されIDが返されること() {
 		PatientRequest patientRequest = new PatientRequest();
-		patientRequest.setName("Sato");
-		patientRequest.setBirthdate(20000101);
+		patientRequest.setUserName("Sato");
+		patientRequest.setUserBirthdate(20000101);
 		doAnswer(invocation -> {
 			(patientRequest).setId(1);
 			return null;
@@ -73,16 +73,16 @@ class MedicineNotebookServiceImplTest {
 	@Test
 	public void PatientRequestで誤った生年月日が指定されたときIllegalArgumentExceptionが返されること() {
 		PatientRequest patientRequest = new PatientRequest();
-		patientRequest.setName("Sato");
-		patientRequest.setBirthdate(2000);
+		patientRequest.setUserName("Sato");
+		patientRequest.setUserBirthdate(2000);
 		assertThatThrownBy(() -> medicineNotebookServiceImpl.postPatient(patientRequest)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void お薬情報を指定したとき正常にお薬情報が登録されIDが返されること() {
 		MedicineRequest medicineRequest = new MedicineRequest();
-		medicineRequest.setName("Sato");
-		medicineRequest.setBirthdate(20000101);
+		medicineRequest.setUserName("Sato");
+		medicineRequest.setUserBirthdate(20000101);
 		medicineRequest.setPharmacy("raiseTech_phamacy");
 		medicineRequest.setMedicine("ibuprofen");
 		doAnswer(invocation -> {
@@ -98,8 +98,8 @@ class MedicineNotebookServiceImplTest {
 	public void medicineRequestで誤った生年月日が指定されたときIllegalArgumentExceptionが返されること() {
 		MedicineRequest medicineRequest = new MedicineRequest();
 		medicineRequest.setId(1);
-		medicineRequest.setName("Sato");
-		medicineRequest.setBirthdate(2000);
+		medicineRequest.setUserName("Sato");
+		medicineRequest.setUserBirthdate(2000);
 		medicineRequest.setPharmacy("raiseTech_phamacy");
 		medicineRequest.setMedicine("ibuprofen");
 		assertThatThrownBy(() -> medicineNotebookServiceImpl.postMedicine(medicineRequest)).isInstanceOf(IllegalArgumentException.class);
